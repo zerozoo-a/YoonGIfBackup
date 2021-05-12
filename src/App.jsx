@@ -1,60 +1,68 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import List from './List';
+import AddPage from './AddPage';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 const App = () => {
-  const [gifData, setGifData] = useState([]);
+  const uri =
+    'https://api.giphy.com/v1/gifs/search?api_key=OhokD3sYb24zaFFpUiO90QSMR7nanYQs&q=query&limit=25&offset=0&rating=g&lang=en';
+  // const [gifData, setGifData] = useState([]);
   const [isGifDataLoading, setIsGifDataLoading] = useState(false);
   const [setInput, setSetInput] = useState(null);
   const [submit, setSubmit] = useState(false);
-  const gifSearch =
-    'https://api.giphy.com/v1/gifs/search?api_key=OhokD3sYb24zaFFpUiO90QSMR7nanYQs&q=query&limit=25&offset=0&rating=g&lang=en';
+  const focusHere = useRef(null);
+  const [list, setList] = useState([]);
+  const [page, setPage] = useState(0);
+  // main screen composition
 
-  //   console.log(gifSearch.replace('HERE', ''));
-
-  async function getFetch(uri, setInput) {
-    uri = uri.replace('query', setInput);
-    const getData = await fetch(uri);
+  async function getFetch(url, setInput) {
+    url = url.replace('query', setInput);
+    const getData = await fetch(url);
     const makeJson = await getData.json();
-    setGifData(makeJson);
+    setList(makeJson);
     setIsGifDataLoading(true);
   }
-  useEffect(() => {
-    console.log('rendered!');
 
-    getFetch(gifSearch, setInput);
+  const setFocus = () => {
+    focusHere.current.focus();
+  };
+  useEffect(() => {
+    (async () => {
+      await getFetch(uri, setInput);
+      setFocus();
+    })();
   }, [submit]);
 
-  return (
-    <>
-      {isGifDataLoading ? (
-        <div>
-          <form>
-            <input onChange={(e) => setSetInput(e.target.value)} />
-            <input
-              onClick={(e) => {
-                e.preventDefault();
-                console.log('prevented?');
-                setSubmit(!submit);
-              }}
-              type='submit'
-              value='Submit'
-            />
-          </form>
+  useEffect(() => {
+    (async () => {
+      await getFetch(uri, setInput);
+    })();
+  }, [page]);
 
-          <ul>
-            {gifData.data.map((v, i) => (
-              <li key={v.title + i}>
-                <div>
-                  <img src={v.images.downsized.url} alt={v.title} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-    </>
+  return (
+    <div>
+      <form>
+        <input
+          ref={focusHere}
+          placeholder='Search GIF images'
+          onChange={(e) => setSetInput(e.target.value)}
+        />
+        <input
+          onClick={(e) => {
+            e.preventDefault();
+            setSubmit(!submit);
+            setFocus();
+          }}
+          type='submit'
+          value='Submit'
+        />
+      </form>
+
+      <List isGifDataLoading={isGifDataLoading} list={list} setList={setList} />
+      <AddPage page={page} setPage={setPage} />
+    </div>
   );
 };
 export default App;
