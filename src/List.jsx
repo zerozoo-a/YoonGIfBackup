@@ -7,7 +7,7 @@ const List = ({ isGifDataLoading, list, setList }) => {
       {isGifDataLoading ? (
         <div>
           <ul>
-            {list.data.map((v, i, ary) => (
+            {list.map((v, i, ary) => (
               <li ref={ary.length === i ? lastRef : null} key={v.title + i}>
                 <div>
                   <img src={v.images.downsized.url} alt={v.title} />
