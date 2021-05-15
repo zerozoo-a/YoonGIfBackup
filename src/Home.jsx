@@ -27,7 +27,7 @@ const SearchBarStyle = styled.div`
     padding: 0;
   }
   .inputSubmit {
-    display: none;
+    visibility: hidden;
   }
   .searchIcon {
     position: fixed;
@@ -55,7 +55,8 @@ const SearchBarStyle = styled.div`
 `;
 const LoadTrigger = styled.div`
   width: 100vh;
-  height: 20vh;
+  height: 10vh;
+  background-color: 'red';
 `;
 const Home = () => {
   const [isGifDataLoading, setIsGifDataLoading] = useState(false);
@@ -66,9 +67,10 @@ const Home = () => {
   const [selectedUriRating, setSelectedUriRating] = useState(null);
   const focusHere = useRef(null);
   const loadMore = useRef(null);
+  const bumper = useRef(null);
   // main screen composition
 
-  async function getFetch(userInput, selectedUriRating) {
+  async function getFetch(__userInput, __selectedUriRating) {
     setIsGifDataLoading(false);
     const uriAdrAndKey =
       'https://api.giphy.com/v1/gifs/search?api_key=OhokD3sYb24zaFFpUiO90QSMR7nanYQs&';
@@ -78,26 +80,28 @@ const Home = () => {
     let uriRatingAndLang = '&rating=g&lang=en';
     let changedUriRatingAndLang = null;
 
-    if (selectedUriRating) {
+    if (__selectedUriRating) {
       changedUriRatingAndLang = uriRatingAndLang.replace(
         '=g',
-        selectedUriRating
+        __selectedUriRating
       );
     }
 
     if (list.length === 0) {
-      if (selectedUriRating) uriRatingAndLang = changedUriRatingAndLang;
-      let afterQuery = uriQuery.replace('query', userInput);
+      //   if (__selectedUriRating) uriRatingAndLang = changedUriRatingAndLang;
+      if (changedUriRatingAndLang) uriRatingAndLang = changedUriRatingAndLang;
+
+      let afterQuery = uriQuery.replace('query', __userInput);
       let uri =
         uriAdrAndKey + afterQuery + uriLimit + uriOffset + uriRatingAndLang;
       const getData = await fetch(uri);
       const makeJson = await getData.json();
       setList([...makeJson.data]);
       setIsGifDataLoading(true);
+      //   ioFnc(isGifDataLoading);
     } else {
-      if (selectedUriRating) uriRatingAndLang = changedUriRatingAndLang;
-      let afterQuery = uriQuery.replace('query', userInput);
-      // let uriOffsetCounter = (page * 2 + 1).toString();
+      if (changedUriRatingAndLang) uriRatingAndLang = changedUriRatingAndLang;
+      let afterQuery = uriQuery.replace('query', __userInput);
       let afterOffset = uriOffset.replace(/[0-9]/, (page * 2 + 1).toString());
       let uri =
         uriAdrAndKey + afterQuery + uriLimit + afterOffset + uriRatingAndLang;
@@ -105,6 +109,7 @@ const Home = () => {
       const makeJson = await getData.json();
       setList((prev) => [...prev, ...makeJson.data]);
       setIsGifDataLoading(true);
+      //   ioFnc(isGifDataLoading);
     }
   }
   const setFocus = () => {
@@ -133,19 +138,37 @@ const Home = () => {
       })();
     }
   }, [page]);
-  useEffect(() => {
-    if (isGifDataLoading) {
-      const options = {
-        threshold: 0.4,
-      };
-      let io = new IntersectionObserver(([entries]) => {
-        if (entries.isIntersecting) {
-          setPage((prev) => prev + 1);
-        }
-      }, options);
-      io.observe(loadMore.current);
-    }
-  }, [isGifDataLoading]);
+  //   useEffect(() => {
+  //     console.log(document.body.scrollHeight == document.body.scrollTop);
+  //     if (isGifDataLoading) {
+  //       const options = {
+  //         threshold: 0.2,
+  //       };
+  //       let io = new IntersectionObserver(([entries], observer) => {
+  //         if (entries.isIntersecting) {
+  //           setPage((prev) => prev + 1);
+  //         } else {
+  //         }
+  //       }, options);
+  //       io.observe(loadMore.current);
+  //     }
+  //   });
+
+  //   const ioFnc = (isGifDataLoading) => {
+  //     if (!isGifDataLoading) {
+  //       const options = {
+  //         threshold: 0.2,
+  //       };
+  //       let io = new IntersectionObserver(([entries], observer) => {
+  //         if (entries.isIntersecting) {
+  //           setPage((prev) => prev + 1);
+  //         } else if (isGifDataLoading) {
+  //           io.unobserve(entries.target);
+  //         }
+  //       }, options);
+  //       io.observe(loadMore.current);
+  //     }
+  //   };
 
   return (
     <div>
@@ -163,10 +186,10 @@ const Home = () => {
               e.preventDefault();
               setSubmit(!submit);
               setFocus();
-              //   setPage((prev) => prev + 1);
             }}
             value='submit'
-            type='submit'></input>
+            type='submit'
+          />
           <FontAwesomeIcon
             onClick={(e) => {
               e.preventDefault();
@@ -202,10 +225,13 @@ const Home = () => {
                 isGifDataLoading={isGifDataLoading}
                 v={v}
                 i={i}
+                page={page}
+                setPage={setPage}
               />
             </div>
           ))}
         </div>
+        <div ref={bumper}></div>
         <LoadTrigger ref={loadMore} />
       </>
     </div>
