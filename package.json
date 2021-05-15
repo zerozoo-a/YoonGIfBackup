@@ -24,6 +24,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-lazy-load-image-component": "^1.5.1",
     "react-reconciler": "^0.25.0",
     "regenerator-runtime": "^0.13.7",
     "styled-components": "^5.2.3",
