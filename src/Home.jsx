@@ -8,7 +8,7 @@ const SearchBarStyle = styled.div`
   display: flex;
   position: fixed;
   width: 100vw;
-  height: 10vh;
+  height: 13vh;
   transform: translate(-50%, 0%);
   top: 0;
   left: 50%;
@@ -16,6 +16,15 @@ const SearchBarStyle = styled.div`
 
   & :focus {
     outline: none;
+  }
+  #logoImg {
+    position: fixed;
+    top: -0.9vh;
+    left: 2vw;
+    img {
+      width: 6vw;
+      height: 7vw;
+    }
   }
   .inputSearch {
     width: 60vw;
@@ -25,22 +34,22 @@ const SearchBarStyle = styled.div`
     margin-left: 50%;
     margin-top: 2.2vh;
     padding: 0;
+    border: 10px solid hotPink;
   }
   .inputSubmit {
     visibility: hidden;
   }
   .searchIcon {
-    position: fixed;
+    position: absolute;
     width: 5vh;
     height: 5vh;
-    left: 63vw;
-    top: 5vh;
-    padding: 0.3vw;
+    margin-left: 76vw;
+    top: 6.1vh;
+    padding: 0.5vw;
     color: #f5f5f1;
-    background-color: rgb(223, 87, 155);
+    background-color: hotPink;
     transform: translate(-50%, -50%);
-    margin-left: 10.1%;
-    border: none;
+    cursor: pointer;
   }
   .ratingStyle {
     position: fixed;
@@ -52,11 +61,168 @@ const SearchBarStyle = styled.div`
     display: flex;
     flex-direction: row;
   }
+  @media screen and (max-width: 1020px) {
+    .searchIcon {
+      position: absolute;
+      width: 5vh;
+      height: 5vh;
+      margin-left: 70%;
+      top: 6vh;
+      padding: 0.5vw;
+      color: #f5f5f1;
+      background-color: hotPink;
+      transform: translate(-50%, -50%);
+      border: none;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 855px) {
+    #logoImg {
+      position: fixed;
+      top: -1.5vh;
+      left: 2vw;
+      img {
+        width: 10vw;
+        height: 11vw;
+      }
+    }
+    .searchIcon {
+      position: absolute;
+      width: 5vh;
+      height: 5vh;
+      margin-left: 67.5%;
+      top: 6vh;
+      padding: 1vw;
+      color: #f5f5f1;
+      background-color: hotPink;
+      transform: translate(-50%, -50%);
+      border-right: 0.3rem solid hotpink;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    #logoImg {
+      position: fixed;
+      top: 0.9vh;
+      left: 2vw;
+      img {
+        width: 10vw;
+        height: 11vw;
+      }
+    }
+    .searchIcon {
+      position: absolute;
+      width: 5vh;
+      height: 5vh;
+      margin-left: 66%;
+      top: 6vh;
+      padding: 0.5vw;
+      color: #f5f5f1;
+      background-color: hotPink;
+      /* background-color: blue; */
+      transform: translate(-50%, -50%);
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  @media screen and (max-width: 539px) {
+    height: 16vh;
+    #logoImg {
+      position: fixed;
+      top: 0.9vh;
+      left: 2vw;
+      img {
+        width: 17vw;
+        height: 18vw;
+      }
+    }
+    .searchIcon {
+      position: absolute;
+      width: 5vh;
+      height: 5vh;
+      margin-left: 65%;
+      top: 6vh;
+      padding: 0.5vw;
+      color: #f5f5f1;
+      background-color: hotPink;
+      /* background-color: blue; */
+      transform: translate(-50%, -50%);
+      border: none;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    height: 16vh;
+    #logoImg {
+      position: fixed;
+      top: 0.9vh;
+      left: 2vw;
+      img {
+        width: 18vw;
+        height: 19vw;
+      }
+    }
+    .inputSearch {
+      width: 80vw;
+      height: 3vh;
+      font-size: 3vw;
+      transform: translate(-50%, 0%);
+      margin-top: 2.2vh;
+      padding: 0;
+      border: 10px solid hotPink;
+    }
+    .searchIcon {
+      position: absolute;
+      width: 3vh;
+      height: 3vh;
+      margin-left: 65%;
+      top: 5vh;
+      padding: 0.5vw;
+      color: #f5f5f1;
+      background-color: hotPink;
+      /* background-color: blue; */
+      transform: translate(-50%, -50%);
+      border: none;
+      cursor: pointer;
+    }
+
+    .ratingStyle {
+      position: fixed;
+      transform: translate(-50%, 0%);
+      left: 50%;
+      top: 9.5vh;
+      font-size: 1rem;
+      border: 3px solid rgb(223, 87, 155);
+    }
+  }
 `;
-const LoadTrigger = styled.div`
-  width: 100vh;
-  height: 10vh;
-  background-color: 'red';
+const FlexBody = styled.div`
+  display: flex;
+  overflow: scroll;
+  width: 100vw;
+  height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 20vh;
+  img {
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 650px) {
+    box-shadow: 1;
+    img {
+      padding: 2rem;
+    }
+  }
+  @media screen and (max-width: 449px) {
+    flex-direction: row;
+    img {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
 `;
 const Home = () => {
   const [isGifDataLoading, setIsGifDataLoading] = useState(false);
@@ -66,8 +232,6 @@ const Home = () => {
   const [page, setPage] = useState(0);
   const [selectedUriRating, setSelectedUriRating] = useState(null);
   const focusHere = useRef(null);
-  const loadMore = useRef(null);
-  const bumper = useRef(null);
   // main screen composition
 
   async function getFetch(__userInput, __selectedUriRating) {
@@ -75,7 +239,7 @@ const Home = () => {
     const uriAdrAndKey =
       'https://api.giphy.com/v1/gifs/search?api_key=OhokD3sYb24zaFFpUiO90QSMR7nanYQs&';
     let uriQuery = 'q=query';
-    let uriLimit = '&limit=1';
+    let uriLimit = '&limit=2';
     let uriOffset = '&offset=0';
     let uriRatingAndLang = '&rating=g&lang=en';
     let changedUriRatingAndLang = null;
@@ -138,42 +302,15 @@ const Home = () => {
       })();
     }
   }, [page]);
-  //   useEffect(() => {
-  //     console.log(document.body.scrollHeight == document.body.scrollTop);
-  //     if (isGifDataLoading) {
-  //       const options = {
-  //         threshold: 0.2,
-  //       };
-  //       let io = new IntersectionObserver(([entries], observer) => {
-  //         if (entries.isIntersecting) {
-  //           setPage((prev) => prev + 1);
-  //         } else {
-  //         }
-  //       }, options);
-  //       io.observe(loadMore.current);
-  //     }
-  //   });
-
-  //   const ioFnc = (isGifDataLoading) => {
-  //     if (!isGifDataLoading) {
-  //       const options = {
-  //         threshold: 0.2,
-  //       };
-  //       let io = new IntersectionObserver(([entries], observer) => {
-  //         if (entries.isIntersecting) {
-  //           setPage((prev) => prev + 1);
-  //         } else if (isGifDataLoading) {
-  //           io.unobserve(entries.target);
-  //         }
-  //       }, options);
-  //       io.observe(loadMore.current);
-  //     }
-  //   };
-
   return (
     <div>
       <form>
         <SearchBarStyle>
+          <div id='logoImg'>
+            <a href='javascript:location.reload(true);'>
+              <img src='https://media.vlpt.us/images/zerozoo-front/post/80293c3e-e847-4448-82dc-aa7afd56e8d6/logo_200x200.png' />
+            </a>
+          </div>
           <input
             className='inputSearch'
             ref={focusHere}
@@ -216,24 +353,20 @@ const Home = () => {
           </div>
         </SearchBarStyle>
       </form>
-      <>
-        <div>
+      <div>
+        <FlexBody>
           {list.map((v, i) => (
-            <div>
-              <List
-                list={list}
-                isGifDataLoading={isGifDataLoading}
-                v={v}
-                i={i}
-                page={page}
-                setPage={setPage}
-              />
-            </div>
+            <List
+              list={list}
+              isGifDataLoading={isGifDataLoading}
+              v={v}
+              i={i}
+              page={page}
+              setPage={setPage}
+            />
           ))}
-        </div>
-        <div ref={bumper}></div>
-        <LoadTrigger ref={loadMore} />
-      </>
+        </FlexBody>
+      </div>
     </div>
   );
 };
