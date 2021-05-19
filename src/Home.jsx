@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import List from './List';
+import { ColorConsumer } from './ColorContext';
 
 const SearchBarStyle = styled.div`
   display: flex;
   position: fixed;
-  width: 100vw;
-  height: 13vh;
+  width: 101vw;
+  height: 20vh;
   transform: translate(-50%, 0%);
   top: 0;
   left: 50%;
@@ -22,12 +23,12 @@ const SearchBarStyle = styled.div`
     top: -0.9vh;
     left: 2vw;
     img {
-      width: 6vw;
-      height: 7vw;
+      width: 6rem;
+      height: 6rem;
     }
   }
   .inputSearch {
-    width: 60vw;
+    width: 60%;
     height: 5vh;
     font-size: 2vw;
     transform: translate(-50%, 0%);
@@ -44,10 +45,10 @@ const SearchBarStyle = styled.div`
     width: 5vh;
     height: 5vh;
     margin-left: 76vw;
-    top: 6.1vh;
-    padding: 0.5vw;
-    color: #f5f5f1;
-    background-color: hotPink;
+    left: 0.5%;
+    margin-top: 5.2vh;
+    padding: 0.65%;
+    color: hotPink;
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
@@ -55,101 +56,44 @@ const SearchBarStyle = styled.div`
     position: fixed;
     left: 80vw;
     top: 2.5vh;
-    border: 3px solid rgb(223, 87, 155);
+    border: 0.5vw solid rgb(223, 87, 155);
   }
   .gifLoading {
     display: flex;
     flex-direction: row;
   }
-  @media screen and (max-width: 1020px) {
-    .searchIcon {
-      position: absolute;
-      width: 5vh;
-      height: 5vh;
-      margin-left: 70%;
-      top: 6vh;
-      padding: 0.5vw;
-      color: #f5f5f1;
-      background-color: hotPink;
-      transform: translate(-50%, -50%);
-      border: none;
-      cursor: pointer;
-    }
-  }
-  @media screen and (max-width: 855px) {
-    #logoImg {
-      position: fixed;
-      top: -1.5vh;
-      left: 2vw;
-      img {
-        width: 10vw;
-        height: 11vw;
-      }
-    }
-    .searchIcon {
-      position: absolute;
-      width: 5vh;
-      height: 5vh;
-      margin-left: 67.5%;
-      top: 6vh;
-      padding: 1vw;
-      color: #f5f5f1;
-      background-color: hotPink;
-      transform: translate(-50%, -50%);
-      border-right: 0.3rem solid hotpink;
-      cursor: pointer;
-    }
-  }
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 950px) {
+    height: 18vh;
     #logoImg {
       position: fixed;
       top: 0.9vh;
       left: 2vw;
       img {
-        width: 10vw;
-        height: 11vw;
+        width: 5rem;
+        height: 5rem;
       }
     }
     .searchIcon {
       position: absolute;
       width: 5vh;
       height: 5vh;
-      margin-left: 66%;
-      top: 6vh;
-      padding: 0.5vw;
-      color: #f5f5f1;
-      background-color: hotPink;
-      /* background-color: blue; */
+      margin-left: 76vw;
+      padding: 0.65%;
+      color: hotPink;
       transform: translate(-50%, -50%);
-      border: none;
       cursor: pointer;
+      margin-left: 76vw;
+      left: 0.5%;
+      margin-top: 5.2vh;
+      padding: 0.65%;
     }
-  }
-
-  @media screen and (max-width: 539px) {
-    height: 16vh;
-    #logoImg {
+    .ratingStyle {
       position: fixed;
-      top: 0.9vh;
-      left: 2vw;
-      img {
-        width: 17vw;
-        height: 18vw;
-      }
-    }
-    .searchIcon {
-      position: absolute;
-      width: 5vh;
-      height: 5vh;
-      margin-left: 65%;
-      top: 6vh;
-      padding: 0.5vw;
-      color: #f5f5f1;
-      background-color: hotPink;
-      /* background-color: blue; */
-      transform: translate(-50%, -50%);
-      border: none;
-      cursor: pointer;
+      transform: translate(-50%, 0%);
+      left: 50%;
+      top: 9.5vh;
+      font-size: 1rem;
+      border: 1.5vw solid rgb(223, 87, 155);
     }
   }
   @media screen and (max-width: 450px) {
@@ -166,25 +110,26 @@ const SearchBarStyle = styled.div`
     .inputSearch {
       width: 80vw;
       height: 3vh;
-      font-size: 3vw;
+      font-size: 2.9vw;
       transform: translate(-50%, 0%);
       margin-top: 2.2vh;
       padding: 0;
       border: 10px solid hotPink;
+      border-right: 10px solid hotPink;
     }
     .searchIcon {
       position: absolute;
-      width: 3vh;
-      height: 3vh;
-      margin-left: 65%;
-      top: 5vh;
-      padding: 0.5vw;
-      color: #f5f5f1;
-      background-color: hotPink;
-      /* background-color: blue; */
+      width: 5vh;
+      height: 5vh;
+      margin-left: 76vw;
+      padding: 0.65%;
+      color: hotPink;
       transform: translate(-50%, -50%);
-      border: none;
       cursor: pointer;
+      margin-left: 76vw;
+      left: 0.5%;
+      margin-top: 4.6vh;
+      padding: 0.65%;
     }
 
     .ratingStyle {
@@ -193,7 +138,7 @@ const SearchBarStyle = styled.div`
       left: 50%;
       top: 9.5vh;
       font-size: 1rem;
-      border: 3px solid rgb(223, 87, 155);
+      border: 1.5vw solid rgb(223, 87, 155);
     }
   }
 `;

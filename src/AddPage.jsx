@@ -3,7 +3,7 @@ import React from 'react';
 const AddPage = ({ page, setPage }) => {
   return (
     <>
-      <div onClick={() => setPage((prev) => prev + 1)}>hahahaha!</div>
+      <div onClick={() => setPage((prev) => prev + 1)}></div>
     </>
   );
 };

@@ -2,10 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const isDevelopment = process.env.NODE_ENV !== 'production';
-// const isDevelopment = process.env.NODE_ENV !== 'development';
+// const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV === 'production';
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 //use only test
+console.log(isDevelopment);
 module.exports = {
   name: 'setVersionTest',
   mode: isDevelopment ? 'development' : 'production',
@@ -66,19 +67,19 @@ module.exports = {
     publicPath: '/dist/',
     hot: true,
   },
-  // optimization: {
-  //   // runtimeChunk: "single",
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         // test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-  //         test: /[\\/](react|react-dom)[\\/]/,
-  //         name: 'vendor',
-  //         chunks: 'all',
-  //       },
-  //     },
-  //   },
-  // },
+  optimization: {
+    // runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          // test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          test: /[\\/](react|react-dom)[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
 };
 
 // optimization: {

@@ -1,17 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ListStyle = styled.div`
   padding: 0;
   margin: 0;
-  /* display: flex;
-  width: 62wv;
-  height: 40vh;
-  justify-content: center;
-  flex-wrap: wrap;
-  list-style: none; */
   img {
     width: 30vw;
   }
@@ -20,12 +12,13 @@ const ListStyle = styled.div`
   }
 `;
 
-const ImageWithLoading = ({ src, placeholder, page, setPage }) => {
+const ImageWithLoading = ({ src, placeholder, setPage }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(placeholder);
   const imgRef = useRef(null);
 
   useEffect(() => {
+    setIsLoaded(false);
     const imageToLoad = new Image();
     imageToLoad.src = src;
     imageToLoad.loading = 'lazy';
@@ -35,20 +28,22 @@ const ImageWithLoading = ({ src, placeholder, page, setPage }) => {
     };
     // Intersection Observer
     const options = {
-      threshold: 1,
+      threshold: 0.1,
     };
     let io = new IntersectionObserver(([entries]) => {
       if (entries.isIntersecting) {
         setPage((prev) => prev + 1);
+        io.unobserve(entries.target);
       }
+      // request 직후 바로 unobserve
     }, options);
     io.observe(imgRef.current);
     if (isLoaded) {
       io.unobserve(imgRef.current);
     }
-
     // End Intersection Observer
   }, [src]);
+
   // useEffect는 변화하는 무언가를 두번째 인자로 받아 실행조건을 설정할 수 있다.
   return (
     <img
