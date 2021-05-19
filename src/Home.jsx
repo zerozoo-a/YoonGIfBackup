@@ -61,8 +61,10 @@ const SearchBarStyle = styled.div`
   }
   .ratingStyle {
     position: fixed;
-    left: 83%;
+    left: 75%;
     top: 0;
+    width: 60px;
+    overflow: hidden;
     margin-top: 10px;
     border: 0.5vw solid rgb(223, 87, 155);
   }
@@ -208,7 +210,7 @@ const Home = () => {
               }}
               name='rating'
               id='ratingSelect'>
-              <option value=''>Choose a rating</option>
+              <option value=''>Rating</option>
               <option value='=g'>g</option>
               <option value='=pg'>pg</option>
               <option value='=pg-13'>pg-13</option>
