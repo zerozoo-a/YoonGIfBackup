@@ -1,4 +1,4 @@
-import { createContext, useState, React } from 'react';
+import React, { createContext, useState } from 'react';
 
 const ColorContext = createContext({
   state: { color: 'red', subColor: 'blue' },
@@ -10,7 +10,7 @@ const ColorContext = createContext({
 
 const ColorProvider = ({ children }) => {
   const [color, setColor] = useState('#292f33');
-  const [subColor, setSubColor] = useState('rgb(241,251,251)');
+  const [subColor, setSubColor] = useState('');
 
   const value = {
     state: { color, subColor },

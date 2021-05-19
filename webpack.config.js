@@ -14,7 +14,7 @@ module.exports = {
   // mode: 'production',
   devtool: 'eval',
   resolve: {
-    extensions: ['.js', '.jsx', 'json'],
+    extensions: ['.js', '.jsx', '.tsx', 'json'],
   },
   entry: './client.jsx',
   module: {

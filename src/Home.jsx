@@ -1,173 +1,87 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import List from './List';
-import { ColorConsumer } from './ColorContext';
+import ColorContext from './ColorContext';
 
+const HomeStyle = styled.div`
+  margin: 0px;
+  padding: 0;
+`;
 const SearchBarStyle = styled.div`
-  display: flex;
   position: fixed;
-  width: 101vw;
-  height: 20vh;
-  transform: translate(-50%, 0%);
+  width: 100%;
+  height: 3rem;
+  margin: 0;
+  padding: 0;
   top: 0;
-  left: 50%;
   background-color: black;
-
   & :focus {
     outline: none;
   }
   #logoImg {
     position: fixed;
-    top: -0.9vh;
+    top: 0.5rem;
     left: 2vw;
     img {
-      width: 6rem;
-      height: 6rem;
+      width: 56%;
+      height: 56%;
     }
   }
-  .inputSearch {
-    width: 60%;
-    height: 5vh;
-    font-size: 2vw;
-    transform: translate(-50%, 0%);
-    margin-left: 50%;
-    margin-top: 2.2vh;
-    padding: 0;
-    border: 10px solid hotPink;
-  }
-  .inputSubmit {
-    visibility: hidden;
-  }
-  .searchIcon {
-    position: absolute;
-    width: 5vh;
-    height: 5vh;
-    margin-left: 76vw;
-    left: 0.5%;
-    margin-top: 5.2vh;
-    padding: 0.65%;
-    color: hotPink;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
+  .inputContainer {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    .inputSearch {
+      width: 40vw;
+      height: 25px;
+      font-size: 1rem;
+      /* transform: translate(-50%, 0%); */
+      /* margin-left: 50%; */
+      margin-top: 10px;
+      padding: 0;
+    }
+    .inputSubmit {
+      position: absolute;
+      visibility: hidden;
+      right: 9999rem;
+    }
+    .searchIcon {
+      color: white;
+      cursor: pointer;
+      transform: scale(1.5);
+      margin-top: 10px;
+      margin-left: -1rem;
+      padding: 0.09rem;
+      background-color: rgb(223, 87, 155);
+    }
   }
   .ratingStyle {
     position: fixed;
-    left: 80vw;
-    top: 2.5vh;
+    left: 83%;
+    top: 0;
+    margin-top: 10px;
     border: 0.5vw solid rgb(223, 87, 155);
   }
   .gifLoading {
     display: flex;
     flex-direction: row;
   }
-  @media screen and (max-width: 950px) {
-    height: 18vh;
-    #logoImg {
-      position: fixed;
-      top: 0.9vh;
-      left: 2vw;
-      img {
-        width: 5rem;
-        height: 5rem;
-      }
-    }
-    .searchIcon {
-      position: absolute;
-      width: 5vh;
-      height: 5vh;
-      margin-left: 76vw;
-      padding: 0.65%;
-      color: hotPink;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      margin-left: 76vw;
-      left: 0.5%;
-      margin-top: 5.2vh;
-      padding: 0.65%;
-    }
-    .ratingStyle {
-      position: fixed;
-      transform: translate(-50%, 0%);
-      left: 50%;
-      top: 9.5vh;
-      font-size: 1rem;
-      border: 1.5vw solid rgb(223, 87, 155);
-    }
-  }
-  @media screen and (max-width: 450px) {
-    height: 16vh;
-    #logoImg {
-      position: fixed;
-      top: 0.9vh;
-      left: 2vw;
-      img {
-        width: 18vw;
-        height: 19vw;
-      }
-    }
-    .inputSearch {
-      width: 80vw;
-      height: 3vh;
-      font-size: 2.9vw;
-      transform: translate(-50%, 0%);
-      margin-top: 2.2vh;
-      padding: 0;
-      border: 10px solid hotPink;
-      border-right: 10px solid hotPink;
-    }
-    .searchIcon {
-      position: absolute;
-      width: 5vh;
-      height: 5vh;
-      margin-left: 76vw;
-      padding: 0.65%;
-      color: hotPink;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      margin-left: 76vw;
-      left: 0.5%;
-      margin-top: 4.6vh;
-      padding: 0.65%;
-    }
-
-    .ratingStyle {
-      position: fixed;
-      transform: translate(-50%, 0%);
-      left: 50%;
-      top: 9.5vh;
-      font-size: 1rem;
-      border: 1.5vw solid rgb(223, 87, 155);
-    }
-  }
 `;
-const FlexBody = styled.div`
+const FlexBodyContainer = styled.div`
+  background-color: ${(props) => props.color};
+
   display: flex;
-  overflow: scroll;
-  width: 100vw;
-  height: 100vh;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  margin-top: 20vh;
-  img {
-    padding: 1rem;
-  }
-
-  @media screen and (max-width: 650px) {
-    box-shadow: 1;
-    img {
-      padding: 2rem;
-    }
-  }
-  @media screen and (max-width: 449px) {
-    flex-direction: row;
-    img {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
-  }
+  margin-top: 3rem;
+  padding: 0;
 `;
 const Home = () => {
   const [isGifDataLoading, setIsGifDataLoading] = useState(false);
@@ -177,6 +91,7 @@ const Home = () => {
   const [page, setPage] = useState(0);
   const [selectedUriRating, setSelectedUriRating] = useState(null);
   const focusHere = useRef(null);
+  const { state, actions } = useContext(ColorContext);
   // main screen composition
 
   async function getFetch(__userInput, __selectedUriRating) {
@@ -248,40 +163,44 @@ const Home = () => {
     }
   }, [page]);
   return (
-    <div>
+    <HomeStyle>
       <form>
         <SearchBarStyle>
           <div id='logoImg'>
             <a href='javascript:location.reload(true);'>
-              <img src='https://media.vlpt.us/images/zerozoo-front/post/80293c3e-e847-4448-82dc-aa7afd56e8d6/logo_200x200.png' />
+              <img src='https://user-images.githubusercontent.com/80259925/118811098-90217500-b8e7-11eb-9c83-5404cf54d62f.png' />
             </a>
           </div>
-          <input
-            className='inputSearch'
-            ref={focusHere}
-            placeholder='Search GIF images'
-            onChange={(e) => setUserInput(e.target.value)}
-          />
-          <input
-            className='inputSubmit'
-            onClick={(e) => {
-              e.preventDefault();
-              setSubmit(!submit);
-              setFocus();
-            }}
-            value='submit'
-            type='submit'
-          />
-          <FontAwesomeIcon
-            onClick={(e) => {
-              e.preventDefault();
-              setSubmit(!submit);
-              setFocus();
-              setPage((prev) => prev + 1);
-            }}
-            className='searchIcon'
-            icon={faSearch}
-          />
+
+          <div className='inputContainer'>
+            <input
+              className='inputSearch'
+              ref={focusHere}
+              placeholder='Search GIF images 🥳'
+              onChange={(e) => setUserInput(e.target.value)}
+            />
+            <input
+              className='inputSubmit'
+              onClick={(e) => {
+                e.preventDefault();
+                setSubmit(!submit);
+                setFocus();
+              }}
+              value='submit'
+              type='submit'
+            />
+            <FontAwesomeIcon
+              onClick={(e) => {
+                e.preventDefault();
+                setSubmit(!submit);
+                setFocus();
+                setPage((prev) => prev + 1);
+              }}
+              className='searchIcon'
+              icon={faSearch}
+            />
+          </div>
+
           <div className='ratingStyle'>
             <select
               onChange={(e) => {
@@ -298,21 +217,23 @@ const Home = () => {
           </div>
         </SearchBarStyle>
       </form>
-      <div>
-        <FlexBody>
-          {list.map((v, i) => (
-            <List
-              list={list}
-              isGifDataLoading={isGifDataLoading}
-              v={v}
-              i={i}
-              page={page}
-              setPage={setPage}
-            />
-          ))}
-        </FlexBody>
-      </div>
-    </div>
+      <FlexBodyContainer
+        id='listContainer'
+        style={{
+          backgroundColor: state.color,
+        }}>
+        {list.map((v, i) => (
+          <List
+            list={list}
+            isGifDataLoading={isGifDataLoading}
+            v={v}
+            i={i}
+            page={page}
+            setPage={setPage}
+          />
+        ))}
+      </FlexBodyContainer>
+    </HomeStyle>
   );
 };
 export default React.memo(Home);

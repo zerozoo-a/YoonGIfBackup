@@ -1,23 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import Home from './Home';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { ColorProvider, ColorConsumer } from './ColorContext';
+import ColorContext, { ColorProvider } from './ColorContext';
 import Toggler from './Toggler';
 const GlobalStyle = createGlobalStyle`
 body {
-background-color:#292f33;
+  margin:0;
+  padding:0;
 }
 
-`;
+// `;
 
 const App = () => {
+  const { state } = useContext(ColorContext);
   // main screen composition
   return (
-    <div>
+    <ColorProvider>
+      <GlobalStyle />
+      <Toggler />
       <Home />
-    </div>
+    </ColorProvider>
   );
 };
 export default App;

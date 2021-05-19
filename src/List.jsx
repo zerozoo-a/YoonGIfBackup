@@ -1,14 +1,38 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const ListStyle = styled.div`
-  padding: 0;
-  margin: 0;
+  /* margin-top: 10%; */
   img {
     width: 30vw;
+    margin: 1vw;
   }
   .loaded {
     visibility: 'hidden';
+  }
+  @media (max-width: 320px) {
+    img {
+      width: 60vw;
+      margin: 1vw;
+    }
+  }
+  @media (max-width: 425px) {
+    img {
+      width: 48vw;
+      margin: 1vw;
+    }
+  }
+  @media (max-width: 768px) {
+    img {
+      width: 22vw;
+      margin: 1vw;
+    }
+  }
+  @media (min-width: 769px) {
+    img {
+      width: 18vw;
+      margin: 1vw;
+    }
   }
 `;
 
@@ -28,7 +52,7 @@ const ImageWithLoading = ({ src, placeholder, setPage }) => {
     };
     // Intersection Observer
     const options = {
-      threshold: 0.1,
+      threshold: 1,
     };
     let io = new IntersectionObserver(([entries]) => {
       if (entries.isIntersecting) {
@@ -64,16 +88,15 @@ const ImageWithLoading = ({ src, placeholder, setPage }) => {
 const List = ({ v, i, page, setPage }) => {
   return (
     <ListStyle>
-      <div key={v.title + i}>
-        <ImageWithLoading
-          src={v.images.downsized_medium.url}
-          placeholder={v.images.downsized_medium.url}
-          i={i}
-          alt={v.title}
-          page={page}
-          setPage={setPage}
-        />
-      </div>
+      <ImageWithLoading
+        src={v.images.downsized_medium.url}
+        placeholder={v.images.downsized_medium.url}
+        i={i}
+        alt={v.title}
+        page={page}
+        setPage={setPage}
+        key={v.title + i}
+      />
     </ListStyle>
   );
 };
