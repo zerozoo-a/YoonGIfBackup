@@ -13,6 +13,16 @@ const TogglerStyle = styled.div`
   cursor: pointer;
   transform: scale(0.25);
   transition: all 0.9 linear;
+  @media (min-width: 1300px) {
+    left: 105px;
+  }
+  @media (max-width: 425px) {
+    transform: scale(0.2);
+    left: 15px;
+  }
+  @media (max-width: 320px) {
+    display: none;
+  }
 `;
 
 const Toggler = () => {
@@ -20,10 +30,9 @@ const Toggler = () => {
   const { state, actions } = useContext(ColorContext);
   useEffect(() => {
     if (isToggleOn) {
-      actions.setColor('#292f33');
-      console.log(state.color);
-    } else {
       actions.setColor('rgb(241,247,247)');
+    } else {
+      actions.setColor('#292f33');
     }
   }, [isToggleOn]);
 

@@ -10,15 +10,9 @@ const ListStyle = styled.div`
   .loaded {
     visibility: 'hidden';
   }
-  @media (max-width: 320px) {
+  @media (min-width: 769px) {
     img {
-      width: 60vw;
-      margin: 1vw;
-    }
-  }
-  @media (max-width: 425px) {
-    img {
-      width: 48vw;
+      width: 18vw;
       margin: 1vw;
     }
   }
@@ -28,9 +22,15 @@ const ListStyle = styled.div`
       margin: 1vw;
     }
   }
-  @media (min-width: 769px) {
+  @media (max-width: 425px) {
     img {
-      width: 18vw;
+      width: 48vw;
+      margin: 1vw;
+    }
+  }
+  @media (max-width: 320px) {
+    img {
+      width: 90vw;
       margin: 1vw;
     }
   }
